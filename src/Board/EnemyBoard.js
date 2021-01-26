@@ -12,6 +12,7 @@ export function SquareEnemy(props) {
     const store = useStore();
     const dispatch = useDispatch();
     const handleClick=(event)=>{
+        console.log(localStorage.getItem('wins2'));
         if(parseInt(props.tableid) ===0){
         dispatch({type:'attack1', payload:event.target.id})
         let count =-1;
@@ -29,7 +30,11 @@ export function SquareEnemy(props) {
                 }
             }
             
+            
         }
+        setTimeout(function () {
+            alert('player two turn now')
+        }, 1000);        
     }else{
         dispatch({type:'attack2', payload:event.target.id})
         let count =-1;
@@ -48,7 +53,41 @@ export function SquareEnemy(props) {
             }
             
         }
+        setTimeout(function () {
+            alert('player one turn now')
+        }, 1000)
     }
+    gameEnded();
+    }
+    const gameEnded =() =>{
+        let userOneWon = true,userTwoWon=true;
+        for(let row =0;row<10;row++){
+            for(let col =0;col<10;col++){
+                if(store.getState().userBoard[row][col] === true){
+                    userOneWon = false;
+                }
+
+            }
+        }
+        for(let row =0;row<10;row++){
+            for(let col =0;col<10;col++){
+                if(store.getState().userBoard2[row][col] === true){
+                    userTwoWon = false;
+                }
+
+            }
+        }
+        if(userOneWon){
+            alert('user two won');
+            dispatch({type:'userTwoWins'});
+            alert(store.getState());
+        }
+        if(userTwoWon){
+            alert('user one won');
+            dispatch({type:'userOneWins'});
+        }
+            
+        
     }
     
         return (

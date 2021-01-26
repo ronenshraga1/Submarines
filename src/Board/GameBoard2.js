@@ -1,8 +1,7 @@
 import './Gameboard.css';
 import React,{useState,useEffect} from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector,useStore } from "react-redux";
 import Button from '@material-ui/core/Button';
-import {getData} from './Updateboard';
 let COUNT =0;
 class Square extends React.Component {
     constructor(props){
@@ -171,7 +170,7 @@ export function Board2()  {
     dispatch({type:'addBoard',payload:counter});
   
   }
-
+  const store = useStore();
     return (
       <div>
         <div className="status">User2</div>

@@ -1,6 +1,6 @@
 import './Gameboard.css';
 import React,{useState,useEffect} from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector,useStore } from "react-redux";
 import Button from '@material-ui/core/Button';
 import {getData} from './Updateboard';
 let COUNT =0;
@@ -50,6 +50,7 @@ export function Board()  {
       ]});
     const counter = useSelector(state1 => state.table);
     const dispatch = useDispatch();
+    const store = useStore();
     const ship5 =()=>{
       const newTable = state.table.slice() //copy the array
       let row = Math.floor(Math.random()*3+6);
@@ -172,7 +173,7 @@ export function Board()  {
 
     return (
       <div>
-        <div className="status">YourBoard</div>
+        <div className="status">User</div>
         <div className="board-row">
           {renderRaw(1)}
         </div>

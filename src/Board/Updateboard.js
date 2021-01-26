@@ -2,8 +2,9 @@ const initialState = {
     userBoard:[],
     userBoard2:[],
     attackBoard:[[]],
-    attackBoard2:[]
-
+    attackBoard2:[],
+    wins: 4,
+    wins2: 3
 };
 
 export default function updateReducer(state1 = initialState,action){
@@ -86,8 +87,12 @@ export default function updateReducer(state1 = initialState,action){
                     }
 
                 }
+        case 'userOneWins':
+            return state1.wins +1;
 
-    }   
+        case 'userTwoWins':
+            return state1.wins2 +1;
+    }       
 
 
 }
