@@ -1,5 +1,5 @@
 import socketIOClient, { io } from "socket.io-client";
-const ENDPOINT = "http://192.168.1.101:4001/";
+const ENDPOINT = "http://192.168.1.102:4001/";
 const socket = io(ENDPOINT,{ transport : ['websocket'] });
 const initialState = {
     userBoard:[],

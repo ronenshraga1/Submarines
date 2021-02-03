@@ -4,7 +4,7 @@ import { useDispatch, useSelector,useStore } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import updateReducer from './Updateboard';
 import socketIOClient, { io } from "socket.io-client";
-const ENDPOINT = "http://192.168.1.101:4001/";
+const ENDPOINT = "http://192.168.1.102:4001/";
 let COUNT =0;
 class Square extends React.Component {
     constructor(props){
