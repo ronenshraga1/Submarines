@@ -1,6 +1,6 @@
 import './Gameboard.css';
 import React,{useState,useEffect} from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector ,useStore} from "react-redux";
 import Button from '@material-ui/core/Button';
 import {getData} from './Updateboard';
 let COUNT =0;
@@ -48,9 +48,9 @@ export function Board2()  {
         [false,false,false,false,false,false,false,false,false,false],
         [false,false,false,false,false,false,false,false,false,false]
       ]});
-    const counter = useSelector(state1 => state.table);
+    const wins2 = useSelector(state1 => state1.wins2);
     const dispatch = useDispatch();
-
+    const store = useStore();
     const ship5 =()=>{
       const newTable = state.table.slice() //copy the array
       let row = Math.floor(Math.random()*3+6);
@@ -140,8 +140,8 @@ export function Board2()  {
           ship2();
           ship3();
           ship4();
-          dispatch({type:'addAttack2',payload:counter});
-          dispatch({type:'addBoard2',payload:counter});
+          dispatch({type:'addAttack2',payload:state.table});
+          dispatch({type:'addBoard2',payload:state.table});
         },[])
 
       
@@ -168,13 +168,14 @@ export function Board2()  {
     
   const  Saveboard = async()=>{
     COUNT =0;
-    dispatch({type:'addBoard',payload:counter});
+    dispatch({type:'addBoard',payload:state.table});
   
   }
 
     return (
       <div>
         <div className="status">User2</div>
+        <h4>wins:{wins2}</h4>
         <div className="board-row">
           {renderRaw(1)}
         </div>

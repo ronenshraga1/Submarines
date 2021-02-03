@@ -9,9 +9,11 @@ import { EnemyBoard } from "./Board/EnemyBoard";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import updateReducer from "./Board/Updateboard";
+
 const store = createStore(updateReducer);
 ReactDOM.render(
   <React.StrictMode>
+    <script src="/socket.io/socket.io.js"></script>
     <Provider store={store}>
     <div className="boards-container">
       <div className="subs-container">

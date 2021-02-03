@@ -5,12 +5,38 @@ import {useState,useEffect} from 'react';
 import updateReducer from './Updateboard';
 import { createStore } from 'redux';
 import { useStore } from 'react-redux'
+import socketIOClient, { io } from "socket.io-client";
 
 let COUNT =-100;
 let COUNT2=-100;
+const ENDPOINT = "http://192.168.1.101:4001/";
+
 export function SquareEnemy(props) {
     const store = useStore();
+    const [wins,setWins] = useState(0);
     const dispatch = useDispatch();
+    const socket = useSelector(state1 =>state1.client);
+
+    const sendCick =(event) =>{
+        socket.emit('attack',event.target.id);
+        socket.once('hit',function(didhit){
+            console.log(event.target.id);
+            if(didhit){
+                event.target.style.background ='pink';
+                console.log('pink');
+            }else{
+                event.target.style.background ='red';
+                console.log('red');
+                alert('oter user turn wait for ur turn');
+            }
+        });
+        socket.once('won',function(won){
+            alert(won);
+            window.location.reload();
+        })
+        
+}
+    
     const handleClick=(event)=>{
         if(parseInt(props.tableid) ===0){
         dispatch({type:'attack1', payload:event.target.id})
@@ -28,8 +54,12 @@ export function SquareEnemy(props) {
                     }
                 }
             }
-            
         }
+        if(event.target.style.background ==='red'){
+        setTimeout(function () {
+            alert('player two turn now')
+        }, 1000);
+    }        
     }else{
         dispatch({type:'attack2', payload:event.target.id})
         let count =-1;
@@ -48,11 +78,43 @@ export function SquareEnemy(props) {
             }
             
         }
+        if(event.target.style.background ==='red'){
+        setTimeout(function () {
+            alert('player one turn now')
+        }, 1000)
     }
     }
-    
+    gameEnded();
+    }
+    const gameEnded =() =>{
+        let userOneWon = true,userTwoWon=true;
+        for(let row =0;row<10;row++){
+            for(let col =0;col<10;col++){
+                if(store.getState().userBoard[row][col] === true){
+                    userOneWon = false;
+                }
+            }
+        }
+        for(let row =0;row<10;row++){
+            for(let col =0;col<10;col++){
+                if(store.getState().userBoard2[row][col] === true){
+                    userTwoWon = false;
+                }
+            }
+        }
+        if(userOneWon){
+            alert('user two won');
+            dispatch({type:'userTwoWins'});
+        }
+        if(userTwoWon){
+            alert('user one won');
+            dispatch({type:'userOneWins'});
+        }
+            
+        
+    }
         return (
-            <button className="square" id={props.id} onClick={handleClick}>
+            <button className="square" id={props.id} onClick={sendCick} >
             </button>
           );
     
@@ -81,7 +143,7 @@ export function EnemyBoard(props) {
         [false,false,false,false,false,false,false,false,false,false],
         [false,false,false,false,false,false,false,false,false,false]
       ]});
-    
+      const store = useStore();
     const renderSquare=(i)=> {
         if(i===1){
         return <SquareEnemy id={COUNT++} table={state.table} tableid ={0}/>;
@@ -108,10 +170,9 @@ export function EnemyBoard(props) {
     
       
         const status = 'Next player: X';
-
         return (
           <div>
-            <div className="status">Attackuser1</div>
+            <div className="status" style={{marginTop:60}}>Attackuser1</div>
             <div className="board-row">
               {renderRaw(1)}
             </div>
@@ -143,7 +204,7 @@ export function EnemyBoard(props) {
             {renderRaw(1)}
             </div>
             <div>
-            <div className="status" style={{marginTop:"250px"}}>Attackuser2</div>
+            <div className="status" style={{marginTop:"310px"}}>Attackuser2</div>
             <div className="board-row">
               {renderRaw(2)}
             </div>

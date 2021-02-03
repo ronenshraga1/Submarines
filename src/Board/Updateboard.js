@@ -1,8 +1,15 @@
+import socketIOClient, { io } from "socket.io-client";
+const ENDPOINT = "http://192.168.1.101:4001/";
+const socket = io(ENDPOINT,{ transport : ['websocket'] });
 const initialState = {
     userBoard:[],
     userBoard2:[],
     attackBoard:[[]],
-    attackBoard2:[]
+    attackBoard2:[],
+    wins: 0,
+    wins2: 0,
+    item: false,
+    client:socket
 
 };
 
@@ -86,8 +93,13 @@ export default function updateReducer(state1 = initialState,action){
                     }
 
                 }
-
-    }   
+        case 'userOneWins':
+            return state1.wins +1;
+        case 'userTwoWins':
+            return state1.wins2 +1;
+        default:
+            return state1;
+    }       
 
 
 }
