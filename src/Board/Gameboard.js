@@ -150,27 +150,13 @@ export function Board()  {
       newTable[row][col] = true;
       setState({table:newTable});
       }
-      const getData = async  ()=>{         
+      const sendData = async  ()=>{         
         socket.on('connect', function() {
             console.log('Connected to server');
             socket.emit('tbl', state.table);
         });
     }
-    const getData2 =async  ()=>{
-         
-        let socket = io(ENDPOINT,{ transport : ['websocket'] });
-        try{
-            const response  = await fetch("http://localhost:4001/")
-            console.log(response.ok);
-            if(response.ok){
-              //const jsonResponse = await response.json();
-              //console.log(jsonResponse);
-            }
-        
-          }catch(error){
-            console.log(error);
-          }
-    }
+    
       useEffect(()=> {
           COUNT =0;
           ship5();
@@ -178,7 +164,7 @@ export function Board()  {
           ship2();
           ship3();
           ship4();
-          getData();
+          sendData();
           dispatch({type:'addBoard',payload:state.table});
           dispatch({type:'addAttack',payload:state.table});
         },[wins1])

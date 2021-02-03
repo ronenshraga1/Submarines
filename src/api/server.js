@@ -36,31 +36,7 @@ let tableOne=[],tableTwo=[];
 let userOne,User2;
 let turnOne=true
 let turnTwo=false;
-let queue = [];    // list of sockets waiting for peers
-let rooms = {};    // map socket.id => room
-let allUsers = {}; // map socket.id => socket
 
-var findPeerForLoneSocket = function(socket) {
-    // this is place for possibly some extensive logic
-    // which can involve preventing two people pairing multiple times
-    if (queue) {
-        // somebody is in queue, pair them!
-        let peer = queue.pop();
-        let room = socket.id + '#' + peer.id;
-        // join them both
-        peer.join(room);
-        socket.join(room);
-        // register rooms to their names
-        rooms[peer.id] = room;
-        rooms[socket.id] = room;
-        // start game
-        peer.emit('game start', {'name': socket.id, 'room':room});
-        socket.emit('game start', {'name': peer.id, 'room':room});
-    } else {
-        // queue is empty, add our lone socket
-        queue.push(socket);
-    }
-}
 const gameover =(socket)=>{
     let userOneWon = true,userTwoWon=true;
         for(let row =0;row<10;row++){
