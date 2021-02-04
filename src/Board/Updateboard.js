@@ -1,6 +1,8 @@
 import socketIOClient, { io } from "socket.io-client";
 const ENDPOINT = "http://192.168.1.102:4001/";
 const socket = io(ENDPOINT,{ transport : ['websocket'] });
+let id= socket.id;
+console.log(id);
 const initialState = {
     userBoard:[],
     userBoard2:[],
@@ -9,7 +11,8 @@ const initialState = {
     wins: 0,
     wins2: 0,
     item: false,
-    client:socket
+    client:socket,
+    clientid :0
 
 };
 

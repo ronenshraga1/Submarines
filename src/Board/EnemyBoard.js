@@ -21,19 +21,17 @@ export function SquareEnemy(props) {
         socket.emit('attack',event.target.id);
         socket.once('hit',function(didhit){
             console.log(event.target.id);
-            if(didhit){
+            if(didhit===true){
                 event.target.style.background ='pink';
                 console.log('pink');
-            }else{
+            }else if(didhit===false && event.target.style.background !=='pink'){
                 event.target.style.background ='red';
                 console.log('red');
-                alert('oter user turn wait for ur turn');
+                alert('other user turn wait for your turn');
+            }else{
+                alert('other user turn wait for your turn');
             }
         });
-        socket.once('won',function(won){
-            alert(won);
-            window.location.reload();
-        })
         
 }
     

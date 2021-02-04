@@ -1,5 +1,5 @@
 import './Gameboard.css';
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useCallback} from 'react';
 import { useDispatch, useSelector,useStore } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import updateReducer from './Updateboard';
@@ -50,7 +50,8 @@ export function Board()  {
         [false,false,false,false,false,false,false,false,false,false],
         [false,false,false,false,false,false,false,false,false,false]
       ]});
-    let wins1 = useSelector(state1 => state1.wins);
+      const[socketId,setId] = useState('');
+    let [wins,setwins] = useState(0);
     const socket = useSelector(state1 =>state1.client);
     const dispatch = useDispatch();
     const store = useStore();
@@ -155,6 +156,35 @@ export function Board()  {
             console.log('Connected to server');
             socket.emit('tbl', state.table);
         });
+        socket.once('start',function(msg){
+            alert(msg);
+        });
+        socket.on('turn',function(msg){
+            console.log('alert');
+            alert(msg);
+        });
+        socket.once('won',function(won,id){
+            alert(won);
+            console.log(id,socket.id)
+            if(id===socket.id){
+                setwins(wins+1);
+                setInterval(() => {
+                    window.location.reload();
+                },1000);
+            }else{
+            setInterval(function() {
+                window.location.reload();
+            },10000);
+        }
+        })
+        socket.once('setid',function(id){
+            console.log(id);
+            COUNT =0;
+            setState({table:state.table});
+            COUNT =0;
+            setId(id);
+            COUNT =0;
+        });
     }
     
       useEffect(()=> {
@@ -167,7 +197,7 @@ export function Board()  {
           sendData();
           dispatch({type:'addBoard',payload:state.table});
           dispatch({type:'addAttack',payload:state.table});
-        },[wins1])
+        },[wins])
         
 
       
@@ -191,10 +221,11 @@ export function Board()  {
           </div>
       )
   }
+  console.log(socketId);
     return (
       <div>
-        <div className="status">User:{socket.id}</div>
-        <h4>wins:{wins1}</h4>
+        <div className="status">User:{socketId}</div>
+        <h4 style={{visibility:'hidden'}}>'wins:{wins}'</h4>
         <div className="board-row">
           {renderRaw(1)}
         </div>
