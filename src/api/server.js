@@ -1,11 +1,8 @@
 const express = require("express");
 const http = require("http");
-const { createElement } = require("react");
 let bodyParser = require('body-parser');
 const port = process.env.PORT || 4001;
 let cors = require('cors');
-const { Socket } = require("dgram");
-var jsonParser = bodyParser.json()
 
   
 const app = express();

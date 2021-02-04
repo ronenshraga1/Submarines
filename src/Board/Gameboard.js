@@ -1,10 +1,6 @@
 import './Gameboard.css';
 import React,{useState,useEffect,useCallback} from 'react';
 import { useDispatch, useSelector,useStore } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import updateReducer from './Updateboard';
-import socketIOClient, { io } from "socket.io-client";
-const ENDPOINT = "http://192.168.1.102:4001/";
 let COUNT =0;
 class Square extends React.Component {
     constructor(props){
@@ -54,7 +50,6 @@ export function Board()  {
     let [wins,setwins] = useState(0);
     const socket = useSelector(state1 =>state1.client);
     const dispatch = useDispatch();
-    const store = useStore();
     localStorage.setItem('wins','0');
     const ship5 = ()=>{
             setState({table:[

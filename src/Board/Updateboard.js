@@ -1,4 +1,4 @@
-import socketIOClient, { io } from "socket.io-client";
+import  { io } from "socket.io-client";
 const ENDPOINT = "http://192.168.1.102:4001/";
 const socket = io(ENDPOINT,{ transport : ['websocket'] });
 let id= socket.id;

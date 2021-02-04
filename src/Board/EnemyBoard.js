@@ -1,15 +1,11 @@
 import React from 'react';
 import './Gameboard.css';
 import { useDispatch, useSelector } from "react-redux";
-import {useState,useEffect} from 'react';
-import updateReducer from './Updateboard';
-import { createStore } from 'redux';
+import {useState} from 'react';
 import { useStore } from 'react-redux'
-import socketIOClient, { io } from "socket.io-client";
 
 let COUNT =-100;
 let COUNT2=-100;
-const ENDPOINT = "http://192.168.1.101:4001/";
 
 export function SquareEnemy(props) {
     const store = useStore();
