@@ -6,11 +6,12 @@ import Submarines from './Subs';
 
 let COUNT = 0;
 let TABLE = [];
+let NUM = 0;
 // eslint-disable-next-line react/prefer-stateless-function
 class Square extends React.Component {
   render() {
     let count = 0;
-    for (let row = 0; row < 10; row += 1) {
+    for (let row = 0; row < NUM; row += 1) {
       for (let col = 0; col < 10; col += 1) {
         if (count === this.props.id - 100) {
           if (this.props.table[row][col] === true) {
@@ -47,6 +48,7 @@ export function Board() {
     TABLE = mat;
   };
   const size = useSelector((state1) => state1.boardSize);
+  NUM = size;
   setSize(size);
   const [state, setState] = useState({ table: TABLE });
   const [socketId, setId] = useState('');

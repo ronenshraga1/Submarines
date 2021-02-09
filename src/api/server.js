@@ -55,8 +55,9 @@ io.on('connection', (socket) => {
   });
   socket.on('attack', (id) => {
     let count = 0;
+    console.log(tableOne.length);
     if (socket.id === userOne && turnOne === true) {
-      for (let row = 0; row < 10; row += 1) {
+      for (let row = 0; row < tableOne.length; row += 1) {
         for (let col = 0; col < 10; col += 1) {
           if (count === parseInt(id)) {
             if (tableTwo[row][col] === true) {
@@ -78,7 +79,7 @@ io.on('connection', (socket) => {
       socket.emit('hit', 'not your turn');
     }
     if (socket.id === user2 && turnTwo === true) {
-      for (let row = 0; row < 10; row += 1) {
+      for (let row = 0; row < tableOne.length; row += 1) {
         for (let col = 0; col < 10; col += 1) {
           if (count === parseInt(id)) {
             if (tableOne[row][col] === true) {
@@ -101,14 +102,14 @@ io.on('connection', (socket) => {
     }
     let userOneWon = true;
     let userTwoWon = true;
-    for (let row = 0; row < 10; row += 1) {
+    for (let row = 0; row < tableOne.length; row += 1) {
       for (let col = 0; col < 10; col += 1) {
         if (tableOne[row][col] === true) {
           userOneWon = false;
         }
       }
     }
-    for (let row = 0; row < 10; row += 1) {
+    for (let row = 0; row < tableOne.length; row += 1) {
       for (let col = 0; col < 10; col += 1) {
         if (tableTwo[row][col] === true) {
           userTwoWon = false;

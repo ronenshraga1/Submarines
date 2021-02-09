@@ -25,13 +25,14 @@ export function SquareEnemy(props) {
       }
     });
   };
+  const size = useSelector((state1) => state1.boardSize);
   // eslint-disable-next-line no-unused-vars
   const handleClick = (event) => {
     // eslint-disable-next-line react/prop-types
     if (parseInt(props.tableid) === 0) {
       dispatch({ type: 'attack1', payload: event.target.id });
       let count = -1;
-      for (let row = 0; row < 10; row += 1) {
+      for (let row = 0; row < size; row += 1) {
         for (let col = 0; col < 10; col += 1) {
           count += 1;
           if (count === parseInt(event.target.id)) {
@@ -51,7 +52,7 @@ export function SquareEnemy(props) {
     } else {
       dispatch({ type: 'attack2', payload: event.target.id });
       let count = -1;
-      for (let row = 0; row < 10; row += 1) {
+      for (let row = 0; row < size; row += 1) {
         for (let col = 0; col < 10; col += 1) {
           count += 1;
           if (count === parseInt(event.target.id)) {
@@ -75,14 +76,14 @@ export function SquareEnemy(props) {
   const gameEnded = () => {
     let userOneWon = true;
     let userTwoWon = true;
-    for (let row = 0; row < 10; row += 1) {
+    for (let row = 0; row < size; row += 1) {
       for (let col = 0; col < 10; col += 1) {
         if (store.getState().userBoard[row][col] === true) {
           userOneWon = false;
         }
       }
     }
-    for (let row = 0; row < 10; row += 1) {
+    for (let row = 0; row < size; row += 1) {
       for (let col = 0; col < 10; col += 1) {
         if (store.getState().userBoard2[row][col] === true) {
           userTwoWon = false;
