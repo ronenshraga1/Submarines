@@ -16,7 +16,7 @@ const initialState = {
   item: false,
   client: socket,
   clientid: 0,
-  boardSize: 7, // שינוי גודל מסך
+  boardSize: 10, // שינוי גודל מסך
 
 };
 
